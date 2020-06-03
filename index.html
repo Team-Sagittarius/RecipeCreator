@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand mr-4" href="#">HYO</a>
+    <button class="btn btn-primary mr-4" type="button" id="addRecipe">Add A Recipe</button>
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchbar" aria-label="Search">
+    </form>
+</nav>
+<div class="container">
+    <div class="modal" id="recipeInput">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100 font-weight-bold">New Recipe</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <input type="text" id="nameEntry" class="form-control validate">
+                        <label>Recipe Name</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="categoryEntry" class="form-control validate">
+                        <label>Category</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="courseEntry" class="form-control validate">
+                        <label>Course</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="descEntry" class="form-control validate">
+                        <label>Description</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" role="dialog" id="foodModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        Placeholder
+                    </h4>
+                </div>
+                <div class="modal-body d-flex flex-row">
+                    <div id="leftside">
+                        
+                    </div>
+                    <div id="rightside">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-primary" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-8 offset-2">
+        <div class="row" id="cardrow">
+            
+        </div>
+    </div>
+</div>
