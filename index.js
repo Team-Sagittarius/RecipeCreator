@@ -3,6 +3,8 @@ const ejs = require('ejs')
 
 const app = express()
 app.use(express.json())
+const bodyParser = require('body-parser')
+app.use(bodyParser())
 
 const cors = require('cors')
 app.use(cors())
@@ -44,21 +46,28 @@ app.post('/api/recipes', (request, response) => {
     }
     else {
         if (!(body.course && body.name && body.category && body.ingredients && body.instructions)) {
-            console.log(body.name)
+            console.log("body.name...", body.name)
             response.status(200).json({
-                error: 'malformed request: missing at least one recipe property'
+                error: 'malformed request: missing at least one recipe profperty'
             })
         } else {
             const newRecipe = new Recipe({
                 name: body.name,
-                category: body.number,
+                category: body.category,
                 course: body.course,
                 ingredients : body.ingredients,
                 vegetarian : body.vegetarian,
                 instructions: body.instructions
             })
             newRecipe.save().then(resObject => {
-                response.json(resObject)
+                Recipe.find({}, (err, data) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        var recipes = data;
+                        response.render("index",{recipes:recipes});
+                    }
+                })
             })
             .catch(error => {
                 console.log("theres an error!...", error.message)

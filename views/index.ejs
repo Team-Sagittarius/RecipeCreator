@@ -54,24 +54,35 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body mx-3">
-                    <div class="md-form mb-5">
-                        <input type="text" id="nameEntry" class="form-control validate">
-                        <label>Recipe Name</label>
+                <form id="r_form" action="/api/recipes" method="post">
+                    <div class="modal-body mx-3">
+                        <div class="md-form mb-5">
+                            <input type="text" id="nameEntry" class="form-control validate" name="name">
+                            <label>Recipe Name</label>
+                        </div>
+                        <div class="md-form mb-5">
+                            <input type="text" id="categoryEntry" class="form-control validate" name="category">
+                            <label>Category</label>
+                        </div>
+                        <div class="md-form mb-5">
+                            <input type="text" id="courseEntry" class="form-control validate" name="course">
+                            <label>Course</label>
+                        </div>
+                        <div class="md-form mb-5">
+                            <input type="text" id="descEntry" class="form-control validate" name="description">
+                            <label>Description</label>
+                        </div>
+                        <div class="md-form mb-5">
+                            <input type="text" id="insnEntry" class="form-control validate" name="instructions">
+                            <label>Instructions</label>
+                        </div>
+                        <div class="md-form mb-5">
+                            <input type="text" id="insnEntry" class="form-control validate" name="ingredients">
+                            <label>Ingredients</label>
+                        </div>
+                        <input type="submit" id="r_button" class="btn btn-primary">
                     </div>
-                    <div class="md-form mb-5">
-                        <input type="text" id="categoryEntry" class="form-control validate">
-                        <label>Category</label>
-                    </div>
-                    <div class="md-form mb-5">
-                        <input type="text" id="courseEntry" class="form-control validate">
-                        <label>Course</label>
-                    </div>
-                    <div class="md-form mb-5">
-                        <input type="text" id="descEntry" class="form-control validate">
-                        <label>Description</label>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -148,7 +159,6 @@ $(document).ready(function() {
     $("#addRecipe").click(function(){
        $("#recipeInput").modal('show');
     });
-
 });
 
 </script>
