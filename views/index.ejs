@@ -7,7 +7,7 @@
   <title>HYO</title>
   <meta name="author" content="SitePoint">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <style>
@@ -18,8 +18,8 @@
   <%# These are functions to format the ingredients and instructions, dont work right now%>
     function formatIngredients(ingredList) {
         var tempstring = "<ul>";
-        for (let [key, value] of Object.entries(ingredList[0])) {
-            tempstring += `<li>${value} -- ${key}</li>`;
+        for (let x of ingredList) {
+            tempstring += `<li>${x}</li>`;
         }
         tempstring += "</ul>";
         return tempstring;
@@ -27,8 +27,8 @@
 
     function formatInstructions(instrucList) {
         var tempstring = "<ol>";
-        for (let [key, value] of Object.entries(instrucList[0])) {
-            tempstring += `<li>${value}</li>`;
+        for (let x of instrucList) {
+            tempstring += `<li>${x}</li>`;
         }
         tempstring+="</ol>";
         return tempstring;
@@ -103,10 +103,10 @@
         <div class="row" id="cardrow">
           <% recipes.forEach((item)=>{%>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-              <div class="card h-100"><img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
+              <div class="card h-100" id=<%=item.id%>><img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
               <div class="card-block"><h4 class="card-title">
                 <%=item.name%>
-                </h4><p class="card-text">
+              </h4><p class="card-text" >
                   DESCRIPTION
                 </p>
                 <p class="card-text"><small class="text-muted">Vegetarian:
@@ -114,8 +114,6 @@
                     else{%><i class="far fa-times-circle" style="color:red"></i><%}%>
                     </small></p>
                   </div>
-                  <div class="leftBody"><%=item.ingredients%></div>
-                  <div class="rightBody"><%=item.instructions%></div>
                 </div>
               </div>
           <%});%>
@@ -128,10 +126,23 @@ $(document).ready(function() {
 
     $(".card").click(function(e) {
         var card = $(e.target).parents(".card");
-        $("#leftside").html(card.children(".leftBody").html());
-        $("#rightside").html(card.children(".rightBody").html());
-        $(".modal-title").html(card.children(".leftBody").html());
-        $("#foodModal").modal('show');
+
+        var cardID = card.attr("id");
+        var getUrl ="/api/recipes/id/"+cardID;
+        $.ajax({url:getUrl,success:function(result){
+          var ingredients = formatIngredients(result.ingredients);
+          var instructions = formatIngredients(result.instructions);
+          console.log(result);
+          $("#leftside").html(ingredients);
+          $("#rightside").html(instructions);
+          $(".modal-title").html(result.name);
+          $("#foodModal").modal('show');
+        },
+        error:function(error){
+          console.log(error);
+        }
+      });
+
     });
 
     $("#addRecipe").click(function(){
