@@ -1,4 +1,5 @@
 const express = require('express')
+const ejs = require('ejs')
 
 const app = express()
 app.use(express.json())
@@ -9,6 +10,24 @@ app.use(cors())
 const Recipe = require('./models/Recipe')
 
 const PORT = process.env.PORT || 3001;
+
+
+app.set('view engine', 'ejs');
+
+app.get('/',(request,response)=>{
+
+  Recipe.find({}, (err, data) => {
+      if (err) {
+          console.log(err)
+      } else {
+          var recipes = data;
+          response.render("index",{recipes:recipes});
+      }
+  })
+
+})
+
+
 
 
 /**
@@ -64,7 +83,7 @@ app.get('/api/recipes', (request, response) => {
 /**
  * @description find a recipe by its unique id (thx mongo)
  * If you guys want to, you could also use this as your key in react (for like a <li>)
- * Thats common practice 
+ * Thats common practice
  */
 app.get('/api/recipes/id/:id', (request, response) => {
     const id = request.params.id

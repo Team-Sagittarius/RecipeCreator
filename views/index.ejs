@@ -1,0 +1,143 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>HYO</title>
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <style>
+  .leftBody{visibility:hidden}
+  .rightBody{visibility:hidden}
+  </style>
+  <script>
+  <%# These are functions to format the ingredients and instructions, dont work right now%>
+    function formatIngredients(ingredList) {
+        var tempstring = "<ul>";
+        for (let [key, value] of Object.entries(ingredList[0])) {
+            tempstring += `<li>${value} -- ${key}</li>`;
+        }
+        tempstring += "</ul>";
+        return tempstring;
+    }
+
+    function formatInstructions(instrucList) {
+        var tempstring = "<ol>";
+        for (let [key, value] of Object.entries(instrucList[0])) {
+            tempstring += `<li>${value}</li>`;
+        }
+        tempstring+="</ol>";
+        return tempstring;
+    }
+  </script>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand mr-4" href="#">HYO</a>
+    <button class="btn btn-primary mr-4" type="button" id="addRecipe">Add A Recipe</button>
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchbar" aria-label="Search">
+    </form>
+</nav>
+<div class="container">
+    <div class="modal" id="recipeInput">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100 font-weight-bold">New Recipe</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <input type="text" id="nameEntry" class="form-control validate">
+                        <label>Recipe Name</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="categoryEntry" class="form-control validate">
+                        <label>Category</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="courseEntry" class="form-control validate">
+                        <label>Course</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="descEntry" class="form-control validate">
+                        <label>Description</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" role="dialog" id="foodModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        Placeholder
+                    </h4>
+                </div>
+                <div class="modal-body d-flex flex-row">
+                    <div id="leftside">
+
+                    </div>
+                    <div id="rightside">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type = "button" class="btn btn-primary" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-8 offset-2">
+        <div class="row" id="cardrow">
+          <% recipes.forEach((item)=>{%>
+            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
+              <div class="card h-100"><img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
+              <div class="card-block"><h4 class="card-title">
+                <%=item.name%>
+                </h4><p class="card-text">
+                  DESCRIPTION
+                </p>
+                <p class="card-text"><small class="text-muted">Vegetarian:
+                  <% if (item.vegetarian) {%><i class="far fa-check-circle" style="color:green"></i><%}
+                    else{%><i class="far fa-times-circle" style="color:red"></i><%}%>
+                    </small></p>
+                  </div>
+                  <div class="leftBody"><%=item.ingredients%></div>
+                  <div class="rightBody"><%=item.instructions%></div>
+                </div>
+              </div>
+          <%});%>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+$(document).ready(function() {
+
+    $(".card").click(function(e) {
+        var card = $(e.target).parents(".card");
+        $("#leftside").html(card.children(".leftBody").html());
+        $("#rightside").html(card.children(".rightBody").html());
+        $(".modal-title").html(card.children(".leftBody").html());
+        $("#foodModal").modal('show');
+    });
+
+    $("#addRecipe").click(function(){
+       $("#recipeInput").modal('show');
+    });
+
+});
+
+</script>
