@@ -36,7 +36,7 @@ app.get('/',(request,response)=>{
  * @definition
  * Post a recipe into MongoDB cluster
  */
-app.post('/api/recipes', (request, response) => {
+app.post('/api/recipes/save', (request, response) => {
     body = request.body
     console.log(body)
     if (!body) {
@@ -65,6 +65,7 @@ app.post('/api/recipes', (request, response) => {
                         console.log(err)
                     } else {
                         var recipes = data;
+                        response.redirect('http://localhost:3001/')
                         response.render("index",{recipes:recipes});
                     }
                 })

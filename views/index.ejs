@@ -54,30 +54,30 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="r_form" action="/api/recipes" method="post">
+                <form id="r_form" action="/api/recipes/save" method="post">
                     <div class="modal-body mx-3">
                         <div class="md-form mb-5">
-                            <input type="text" id="nameEntry" class="form-control validate" name="name">
+                            <input type="text" id="nameEntry" class="form-control validate" name="name" required>
                             <label>Recipe Name</label>
                         </div>
                         <div class="md-form mb-5">
-                            <input type="text" id="categoryEntry" class="form-control validate" name="category">
+                            <input type="text" id="categoryEntry" class="form-control validate" name="category" required>
                             <label>Category</label>
                         </div>
                         <div class="md-form mb-5">
-                            <input type="text" id="courseEntry" class="form-control validate" name="course">
+                            <input type="text" id="courseEntry" class="form-control validate" name="course" required>
                             <label>Course</label>
                         </div>
                         <div class="md-form mb-5">
-                            <input type="text" id="descEntry" class="form-control validate" name="description">
+                            <input type="text" id="descEntry" class="form-control validate" name="description" required>
                             <label>Description</label>
                         </div>
                         <div class="md-form mb-5">
-                            <input type="text" id="insnEntry" class="form-control validate" name="instructions">
+                            <input type="text" id="insnEntry" class="form-control validate" name="instructions" required>
                             <label>Instructions</label>
                         </div>
                         <div class="md-form mb-5">
-                            <input type="text" id="insnEntry" class="form-control validate" name="ingredients">
+                            <input type="text" id="insnEntry" class="form-control validate" name="ingredients" required>
                             <label>Ingredients</label>
                         </div>
                         <input type="submit" id="r_button" class="btn btn-primary">
