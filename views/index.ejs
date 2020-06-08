@@ -114,7 +114,7 @@
         <div class="row" id="cardrow">
           <% recipes.forEach((item)=>{%>
             <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-              <div class="card h-100" id=<%=item.id%>><img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
+              <div class="card h-100" id=<%=item.name%> ><img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
               <div class="card-block"><h4 class="card-title">
                 <%=item.name%>
               </h4><p class="card-text" >
@@ -159,6 +159,20 @@ $(document).ready(function() {
     $("#addRecipe").click(function(){
        $("#recipeInput").modal('show');
     });
+
+    $("#searchbar").on('change paste keyup', function(){
+        var term = $("#searchbar").val();
+        var cards = document.getElementsByClassName("card h-100");
+        console.log(term);
+        for (let c of cards) {
+            console.log(c.id);
+            if (c.id.includes(term)) {
+                $(c).show();
+            } else {
+                $(c).hide();
+            }
+        }
+   });
 });
 
 </script>

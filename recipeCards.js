@@ -47,4 +47,15 @@ $(document).ready(function() {
        $("#recipeInput").modal('show');
     });
 
+    $("#searchbar").on('change paste keyup', function(){
+      var term = $("#searchbar").val();
+      var cards = document.getElementsByClassName("card h-100");
+      for (let c of cards) {
+          if (c.id.includes(term)) {
+              $(c).show();
+          } else {
+              $(c).hide();
+          }
+      }
+     });
 });
