@@ -48,14 +48,15 @@ $(document).ready(function() {
     });
 
     $("#searchbar").on('change paste keyup', function(){
-      var term = $("#searchbar").val();
-      var cards = document.getElementsByClassName("card h-100");
-      for (let c of cards) {
-          if (c.id.includes(term)) {
-              $(c).show();
-          } else {
-              $(c).hide();
-          }
-      }
-     });
+        var term = $("#searchbar").val();
+        var cards = document.getElementsByClassName("card h-100");
+        console.log(term);
+        for (let c of cards) {
+            if (c.querySelectorAll(".card-title")[0].id.includes(term)) {
+                $(c).show();
+            } else {
+                $(c).hide();
+            }
+        }
+   });
 });
