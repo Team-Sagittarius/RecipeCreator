@@ -65,8 +65,7 @@ app.post('/api/recipes/save', (request, response) => {
                         console.log(err)
                     } else {
                         var recipes = data;
-                        response.redirect('http://localhost:3001/')
-                        response.render("index",{recipes:recipes});
+                        response.redirect('/')
                     }
                 })
             })

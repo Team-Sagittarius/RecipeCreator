@@ -4,24 +4,26 @@ const url = 'mongodb+srv://jonah:hackyourown1@cluster0-cccuc.mongodb.net/Recipes
 
 console.log('connecting to...', url)
 
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
-.then(result => {
-    console.log('connected to MongoDB')
-})
-.catch(error => {
-    console.log("error connecting to mongo", error.message)
-})
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(result => {
+        console.log('connected to MongoDB')
+    })
+    .catch(error => {
+        console.log("error connecting to mongo", error.message)
+    })
 
 const recipeSchema = new mongoose.Schema({
     name: String,
     category: String,
     course: String,
-    ingredients: { type: Array, 'default' : []},
+    ingredients: { type: Array, 'default': [] },
     vegetarian: Boolean,
-    instructions: {type: Array, 'default' : []}
- })
+    instructions: { type: Array, 'default': [] },
+    url: { type: String, 'default': "" },
+    description: { type: String, 'default': "" }
+})
 
- recipeSchema.set('toJSON', {
+recipeSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()
         delete returnedObject._id
