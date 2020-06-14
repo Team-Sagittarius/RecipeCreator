@@ -42,7 +42,11 @@
     <button class="btn btn-primary mr-4" type="button" id="addRecipe">Add A Recipe</button>
     <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchbar" aria-label="Search">
+        
     </form>
+    <ul class="navbar-nav ml-auto">
+        <button class="btn btn-primary mr-4 " type="button" id="logout">Logout</button>
+    </ul>
 </nav>
 <div class="container">
     <div class="modal" id="recipeInput">
@@ -172,6 +176,11 @@ $(document).ready(function() {
             }
         }
    });
+   $("#logout").click(() => {
+    localStorage.clear()
+    window.location.replace("/login");
+    
+   })
 });
 
 </script>

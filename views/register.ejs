@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    </head>
+    <style>
+        
+    </style>
+<body>
+    <section class="bg-alt">
+        <div class="container">
+            <h2 class="text-center pb-2"></h2>
+            <div class="row">
+                <div class="col-md-15 col-12">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <h1>Sign up for RecipeCreator</h1>
+                            <ul class="list-inline">
+                                                 </ul>
+                            <form id="registerForm" role="form" action="/user" method="POST">
+                                <div class="form-group row">
+                                    <label for="input2EmailForm" class="sr-only control-label">username</label>
+                                    <div class="col-sm-8 mx-auto">
+                                        <input type="text" class="form-control" id="usernameForm" placeholder="username" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="input2PasswordForm" class="sr-only control-label">password</label>
+                                    <div class="col-sm-8 mx-auto">
+                                        <input type="password" class="form-control" id="passwordForm1" placeholder="password" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="input2Password2Form" class="sr-only control-label">verify</label>
+                                    <div class="col-sm-8 mx-auto">
+                                        <input type="password" class="form-control" id="passwordForm2" placeholder="verify password" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-8 mx-auto pb-3 pt-2">
+                                        <button type="submit" class="btn btn-outline-secondary btn-lg btn-block">Register</button>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-8 mx-auto">
+                                        <di>
+                                            <a href="login">
+                                                Back to login page.
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+<script>
+    $(document).ready(() => {
+    $( "#registerForm" ).submit(function( event ) {
+    event.preventDefault()
+    const username = $("#usernameForm").val()
+    const password1 = $("#passwordForm1").val()
+    const password2 = $("#passwordForm2").val()
+    const formData = {username: username, password: password1}
+    if (password1.length < 5 || username.length < 5) {
+        alert('Both username and password must have length at least 5!')
+    } else if (password1 !== password2) {
+        alert('Passwords must match!')
+    } else {
+        $.post('/user', formData, (data, status) => {
+            alert('Sign up succeeded! :>)')
+            window.location.replace("/login")
+        })
+        .fail( (data) => {
+            const error = data.responseJSON.error
+            console.log(error)
+            if (error === 'usernameNotUniqueError') {
+                alert('That username is not unique, please choose another one!')
+            }  
+            else {
+            alert('Sign up failed :(')
+            }
+        })
+}
+    
+})
+    })
+</script>
+</html>

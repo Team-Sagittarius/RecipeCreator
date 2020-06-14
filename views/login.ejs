@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </head>
+<body>
+<section class="bg-alt">
+    <div class="container">
+        <h2 class="text-center pb-2"></h2>
+        <div class="row">
+            <div class="col-md-15 col-12">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h1>Login to the Team Sagitarrius RecipeCreator!</h1>
+                        <ul class="list-inline">
+                        </ul>
+                        <form role="form" id="form" action="/home" method="GET">
+                            <div class="form-group row">
+                                <label for="inputUserForm" class="sr-only control-label">Username</label>
+                                <div class="col-sm-8 mx-auto">
+                                    <input type="text" class="form-control" id="username" placeholder="username" required="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPasswordForm" class="sr-only control-label">Password</label>
+                                <div class="col-sm-8 mx-auto">
+                                    <input type="password" class="form-control" id="password" placeholder="password" required="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-8 mx-auto">
+                                    <di>
+                                        <a href="register">
+                                            Not a user? Sign up here.
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row justify-content-center">
+                                <div class="col-sm-8 p-b-3 p-t-2">
+                                    <button type="submit" class="btn btn-outline-secondary btn-lg btn-block">Sign-in</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+<script>
+    $(document).ready( () => {
+        $("#form").submit((e) => {
+        console.log('hmm')
+        const username = $('#username').val()
+        const password = $('#password').val()
+        const formData = {username, password}
+        $.post('/login', formData, (data, status) => {
+            console.log('data', status)
+            window.sessionStorage.setItem('username', username)
+          //   window.location.replace("/home/" + username +'/');
+        }).fail((data) => {
+            const error = data.responseJSON.error
+            if (error === 'missingUserError') {
+                alert('that user does not exist')
+                e.preventDefault()
+            } else if (error === 'wrongUsernameOrPasswordError') {
+                alert('Incorrect username or password')
+                e.preventDefault()
+            } else {
+                alert('Error logging in')
+                e.preventDefault()
+            }
+        })
+    })
+})
+</script>
+
+
+</html>
