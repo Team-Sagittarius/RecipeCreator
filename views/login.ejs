@@ -16,10 +16,10 @@
             <div class="col-md-15 col-12">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body text-center">
-                        <h1>Login to the Team Sagitarrius RecipeCreator!</h1>
+                        <h1>Login to the Team Sagittarius RecipeCreator!</h1>
                         <ul class="list-inline">
                         </ul>
-                        <form role="form" id="form" action="/home" method="GET">
+                        <form role="form" id="form" action="/login" method="POST">
                             <div class="form-group row">
                                 <label for="inputUserForm" class="sr-only control-label">Username</label>
                                 <div class="col-sm-8 mx-auto">
@@ -58,6 +58,7 @@
 <script>
     $(document).ready( () => {
         $("#form").submit((e) => {
+        e.preventDefault()
         console.log('hmm')
         const username = $('#username').val()
         const password = $('#password').val()
@@ -65,18 +66,15 @@
         $.post('/login', formData, (data, status) => {
             console.log('data', status)
             window.sessionStorage.setItem('username', username)
-          //   window.location.replace("/home/" + username +'/');
+            window.location.replace("/home");
         }).fail((data) => {
             const error = data.responseJSON.error
             if (error === 'missingUserError') {
                 alert('that user does not exist')
-                e.preventDefault()
             } else if (error === 'wrongUsernameOrPasswordError') {
                 alert('Incorrect username or password')
-                e.preventDefault()
             } else {
                 alert('Error logging in')
-                e.preventDefault()
             }
         })
     })

@@ -21,6 +21,8 @@
     "jsdom": "^16.2.2",
     "mongoose": "^5.9.16",
     "mongoose-unique-validator": "^2.0.3",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "session-file-store": "^1.4.0",
     "uuid": "^8.1.0"
   },

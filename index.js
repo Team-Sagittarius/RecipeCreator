@@ -2,6 +2,7 @@ const app = require('./app.js')
 const Recipe = require('./models/Recipe')
 const User = require('./models/User')
 const bcrypt = require('bcrypt')
+const passport = require('./config/passport')
 
 const { response } = require('express')
 
@@ -25,8 +26,11 @@ app.get('/', (request, response) => {
 })
 
 app.get('/home', async (request, response) => {
+    console.log('home sweet home')
     try {
-        if (request.sessionID) {
+        console.log('hiya!')
+        console.log('is authed', request.isAuthenticated())
+        if (request.isAuthenticated()) {
             await Recipe.find({}, (err, data) => {
                 if (err) {
                     console.log(err)
@@ -79,28 +83,41 @@ app.post('/user', async (request, response) => {
 })
 
 
-app.post('/login', async (request, response) => {
-    const body = request.body
-    try {
-        const user = await User.findOne({ username: body.username })
-        if (!user) {
-            response.status(400).json({ error: 'missingUserError' })
-            console.log('missingUserError')
-        } else {
-            const passwordCorect = await bcrypt.compare(body.password, user.passwordHash)
-            if (passwordCorect) {
-                console.log('user...username', user.username)
-                response.redirect('/home')
-                //   response.status(200).end()
-            } else {
-                response.status(400).json({ error: 'wrongUsernameOrPasswordError' })
-            }
+/**
+ * Im going to leave in this logic here, so if you guys want to look over it the consone log errors might be helpful ;)
+ */
+app.post('/login', (req, res, next) => {
+    console.log('just one right?')
+    passport.authenticate('local', (err, user, info) => {
+        console.log('Inside passport.authenticate() callback');
+        console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
+        console.log(`req.user: ${JSON.stringify(req.user)}`)
+        console.log('why is user this?', user)
+        if (err) {
+            console.log('please no never throughr here right?')
+            return next(err);
         }
-    } catch (error) {
-        console.log(error.message)
-        console.log(error)
-    }
+        if (!user) {
+            console.log('so user is falsy?', user)
+            console.log('never throughr here right?')
+            return res.redirect('/login')
+        }
+        req.login(user, (err) => {
+            console.log('Inside req.login() callback')
+            console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
+            console.log(`req.user: ${JSON.stringify(req.user)}`)
+            return res.redirect('/home')
+        })
+    })(req, res, next);
 })
+
+// app.post('/login',
+//     passport.authenticate('local', {
+//         successRedirect: '/home',
+//         failureRedirect: '/login'
+//     }))
+
+
 
 
 /**
