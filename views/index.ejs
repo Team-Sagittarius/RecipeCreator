@@ -42,86 +42,27 @@
     <button class="btn btn-primary mr-4" type="button" id="addRecipe">Add A Recipe</button>
     <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" id="searchbar" aria-label="Search">
-        
+
     </form>
     <ul class="navbar-nav ml-auto">
         <button class="btn btn-primary mr-4 " type="button" id="logout">Logout</button>
     </ul>
 </nav>
 <div class="container">
-    <div class="modal" id="recipeInput">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h3 class="modal-title w-100 font-weight-bold">New Recipe</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="r_form" action="/api/recipes/save" method="post">
-                    <div class="modal-body mx-3">
-                        <div class="md-form mb-5">
-                            <input type="text" id="nameEntry" class="form-control validate" name="name" required>
-                            <label>Recipe Name</label>
-                        </div>
-                        <div class="md-form mb-5">
-                            <input type="text" id="categoryEntry" class="form-control validate" name="category" required>
-                            <label>Category</label>
-                        </div>
-                        <div class="md-form mb-5">
-                            <input type="text" id="courseEntry" class="form-control validate" name="course" required>
-                            <label>Course</label>
-                        </div>
-                        <div class="md-form mb-5">
-                            <input type="text" id="descEntry" class="form-control validate" name="description" required>
-                            <label>Description</label>
-                        </div>
-                        <div class="md-form mb-5">
-                            <input type="text" id="insnEntry" class="form-control validate" name="instructions" required>
-                            <label>Instructions</label>
-                        </div>
-                        <div class="md-form mb-5">
-                            <input type="text" id="insnEntry" class="form-control validate" name="ingredients" required>
-                            <label>Ingredients</label>
-                        </div>
-                        <input type="submit" id="r_button" class="btn btn-primary">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="modal" role="dialog" id="foodModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">
-                        Placeholder
-                    </h4>
-                </div>
-                <div class="modal-body d-flex flex-row">
-                    <div id="leftside">
 
-                    </div>
-                    <div id="rightside">
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type = "button" class="btn btn-primary" data-dismiss="modal">
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-8 offset-2">
+    <div class="col-10 offset-1">
         <div class="row" id="cardrow">
           <% recipes.forEach((item)=>{%>
-            <div class="col-md-6 col-lg-4 col-xl-3 py-2">
-              <div class="card h-100" id=<%=item.id%>><img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
-              <div class="card-block"><h4 class="card-title" id=<%=item.name%>>
+            <div class="col-md-2 col-lg-3 col-xl-4 py-2">
+              <div class="card h-100" id=<%=item.id%>>
+                <img class="card-img-top img-fluid" alt="Card image cap" src=<%=item.url%>>
+              <div class="card-block">
+                <div class="d-flex justify-content-center">
+                <h4 class="card-title" id=<%=item.name%>>
                 <%=item.name%>
-              </h4><p class="card-text" >
+                </h4>
+                </div>
+              <p class="card-text" >
                   DESCRIPTION
                 </p>
                 <p class="card-text"><small class="text-muted">Vegetarian:
@@ -132,6 +73,86 @@
                 </div>
               </div>
           <%});%>
+        </div>
+    </div>
+</div>
+<div class="modal" role="dialog" id="foodModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <h4 class="modal-title">
+                    Placeholder
+                </h4>
+            </div>
+            <div class="modal-body d-flex">
+              <div class="flex-column pr-5">
+                <div>
+                  Ingredients
+                  <hr>
+                <div class="flex-fill" id="leftside">
+                </div>
+                </div>
+                <div>
+                  Instructions
+                  <hr>
+                <div class="flex-fill" id="rightside">
+                </div>
+                </div>
+              </div>
+              <div class="flex-grow-1">
+              <div class="d-flex justify-content-end">
+                <div style="height:200px;width:200px;overflow:hidden">
+                <img class="img-thumbnail" src="//placehold.it/500x280" alt="Thumbnail img" id="modal_img">
+              </div>
+              </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type = "button" class="btn btn-primary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="recipeInput">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h3 class="modal-title w-100 font-weight-bold">New Recipe</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="r_form" action="/api/recipes/save" method="post">
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <input type="text" id="nameEntry" class="form-control validate" name="name" required>
+                        <label>Recipe Name</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="categoryEntry" class="form-control validate" name="category" required>
+                        <label>Category</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="courseEntry" class="form-control validate" name="course" required>
+                        <label>Course</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="descEntry" class="form-control validate" name="description" required>
+                        <label>Description</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="insnEntry" class="form-control validate" name="instructions" required>
+                        <label>Instructions</label>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="insnEntry" class="form-control validate" name="ingredients" required>
+                        <label>Ingredients</label>
+                    </div>
+                    <input type="submit" id="r_button" class="btn btn-primary">
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -152,6 +173,7 @@ $(document).ready(function() {
           $("#rightside").html(instructions);
           $(".modal-title").html(result.name);
           $("#foodModal").modal('show');
+          $("#modal_img").attr('url',result.url)
         },
         error:function(error){
           console.log(error);
@@ -179,7 +201,7 @@ $(document).ready(function() {
    $("#logout").click(() => {
     localStorage.clear()
     window.location.replace("/login");
-    
+
    })
 });
 

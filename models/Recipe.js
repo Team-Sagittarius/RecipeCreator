@@ -7,7 +7,7 @@ const recipeSchema = new mongoose.Schema({
     ingredients: { type: Array, 'default': [] },
     vegetarian: Boolean,
     instructions: { type: Array, 'default': [] },
-    url: { type: String, 'default': "" },
+    url: { type: String, 'default': "//placehold.it/500x280" },
     description: { type: String, 'default': "" }
 })
 
