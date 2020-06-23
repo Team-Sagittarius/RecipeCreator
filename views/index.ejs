@@ -19,7 +19,9 @@
     function formatIngredients(ingredList) {
         var tempstring = "<ul>";
         for (let x of ingredList) {
+          if (x.trim().length>=1){
             tempstring += `<li>${x}</li>`;
+          }
         }
         tempstring += "</ul>";
         return tempstring;
@@ -143,9 +145,15 @@
                         <label>Description</label>
                     </div>
                     <div class="md-form mb-5">
-                        <input type="text" id="insnEntry" class="form-control validate" name="instructions" required>
+                        <input type="text" id="instEntry" class="form-control" name="instructions">
                         <label>Instructions</label>
+                        <button class="btn btn-primary" type="button" id="addInst">+</button>
                     </div>
+
+                    <div class="md-form mb-5">
+                      <textarea readonly class="form-control validate" id="instList" name="instructions2" required></textarea>
+                    </div>
+
                     <div class="md-form mb-5">
                         <input type="text" id="insnEntry" class="form-control validate" name="ingredients" required>
                         <label>Ingredients</label>
@@ -203,6 +211,15 @@ $(document).ready(function() {
     window.location.replace("/login");
 
    })
+
+   $('#addInst').click(function(){
+     var toAdd = $("#instEntry").val();
+     if (!(toAdd==="")){
+       $('#instList').append($("#instEntry").val()+"\n");
+       $('#instEntry').val("");
+     }
+   })
+
 });
 
 </script>

@@ -133,19 +133,20 @@ app.post('/api/recipes/save', (request, response) => {
         })
     }
     else {
-        if (!(body.course && body.name && body.category && body.ingredients && body.instructions)) {
+        if (!(body.course && body.name && body.category && body.ingredients && body.instructions2)) {
             console.log("body.name...", body.name)
             response.status(200).json({
                 error: 'malformed request: missing at least one recipe profperty'
             })
         } else {
+          console.log(body.instructions2);
             const newRecipe = new Recipe({
                 name: body.name,
                 category: body.category,
                 course: body.course,
                 ingredients: body.ingredients,
                 vegetarian: body.vegetarian,
-                instructions: body.instructions
+                instructions: body.instructions2.split("\r\n")
             })
             newRecipe.save().then(resObject => {
                 Recipe.find({}, (err, data) => {
