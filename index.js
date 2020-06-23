@@ -139,14 +139,15 @@ app.post('/api/recipes/save', (request, response) => {
                 error: 'malformed request: missing at least one recipe profperty'
             })
         } else {
-          console.log(body.instructions2);
+            console.log('the url is...', body.url);
             const newRecipe = new Recipe({
                 name: body.name,
                 category: body.category,
                 course: body.course,
                 ingredients: body.ingredients,
                 vegetarian: body.vegetarian,
-                instructions: body.instructions2.split("\r\n")
+                instructions: body.instructions2.split("\r\n"),
+                url: body.url
             })
             newRecipe.save().then(resObject => {
                 Recipe.find({}, (err, data) => {
@@ -186,9 +187,9 @@ app.get('/api/recipes', (request, response) => {
 app.get('/api/recipes/id/:id', (request, response) => {
     const id = request.params.id
     console.log(id)
-    Recipe.findById(id).then(person => {
-        if (person) {
-            response.json(person)
+    Recipe.findById(id).then(recipe => {
+        if (recipe) {
+            response.json(recipe)
         } else {
             response.status(404).end()
         }
@@ -201,9 +202,9 @@ app.get('/api/recipes/id/:id', (request, response) => {
  */
 app.get('/api/recipes/name/:name', (request, response) => {
     const reqName = request.params.name
-    Recipe.find({ name: reqName }).then(person => {
-        if (person) {
-            response.json(person)
+    Recipe.find({ name: reqName }).then(recipe => {
+        if (recipe) {
+            response.json(recipe)
         } else {
             response.status(404).end()
         }
@@ -215,9 +216,9 @@ app.get('/api/recipes/name/:name', (request, response) => {
 */
 app.get('/api/recipes/course/:course', (request, response) => {
     const reqCourse = request.params.course
-    Recipe.find({ name: reqName }).then(person => {
-        if (person) {
-            response.json(person)
+    Recipe.find({ name: reqName }).then(recipe => {
+        if (recipe) {
+            response.json(recipe)
         } else {
             response.status(404).end()
         }

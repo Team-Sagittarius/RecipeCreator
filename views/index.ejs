@@ -158,6 +158,11 @@
                         <input type="text" id="insnEntry" class="form-control validate" name="ingredients" required>
                         <label>Ingredients</label>
                     </div>
+
+                    <div class="md-form mb-5">
+                        <input type="text" id="urlEntry" class="form-control validate" name="url">
+                        <label>Picture!</label>
+                    </div>
                     <input type="submit" id="r_button" class="btn btn-primary">
                 </div>
             </form>
@@ -171,17 +176,18 @@ $(document).ready(function() {
     $(".card").click(function(e) {
         var card = $(e.target).parents(".card");
 
+        console.log('wahthoahs');
         var cardID = card.attr("id");
         var getUrl ="/api/recipes/id/"+cardID;
         $.ajax({url:getUrl,success:function(result){
           var ingredients = formatIngredients(result.ingredients);
           var instructions = formatIngredients(result.instructions);
-          console.log(result);
+          console.log('result is...' , result);
           $("#leftside").html(ingredients);
           $("#rightside").html(instructions);
           $(".modal-title").html(result.name);
           $("#foodModal").modal('show');
-          $("#modal_img").attr('url',result.url)
+          $("#modal_img").attr('src',result.url)
         },
         error:function(error){
           console.log(error);
